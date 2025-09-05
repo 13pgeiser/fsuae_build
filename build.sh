@@ -16,19 +16,23 @@ RUN set -ex \
 	automake \
 	build-essential \
 	gettext \
+	libflac-dev \
 	libfreetype6-dev \
 	libglew-dev \
 	libglib2.0-dev \
 	libjpeg-dev \
+	libmpg123-dev \
 	libmpeg2-4-dev \
 	libopenal-dev \
 	libpng-dev \
-	libsdl2-dev \
-	libsdl2-ttf-dev \
+	libsdl3-dev \
+	libsdl3-image-dev \
+	libsdl3-ttf-dev \
 	libtool \
 	libxi-dev \
 	libxtst-dev \
 	libportmidi-dev \
+	python3-dev \
 	zip \
 	zlib1g-dev \
 	git \

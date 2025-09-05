@@ -1,4 +1,5 @@
 bash ./clean.sh
+bash ./check.sh
 bash ./build.sh
 directory_upload release
 bash ./clean.sh
