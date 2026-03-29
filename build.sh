@@ -25,6 +25,9 @@ RUN set -ex \
 	libmpeg2-4-dev \
 	libopenal-dev \
 	libpng-dev \
+	libsdl2-dev \
+	libsdl2-image-dev \
+	libsdl2-ttf-dev \
 	libsdl3-dev \
 	libsdl3-image-dev \
 	libsdl3-ttf-dev \
@@ -44,7 +47,7 @@ RUN set -ex \
 RUN set -ex \
     && mkdir -p /release \
     && git clone https://github.com/FrodeSolheim/fs-uae.git \
-    && tar cvJf /release/fs-uae.tar.xz fs-uae
+    && tar cvJf /release/fs-uae-master.tar.xz fs-uae
 RUN set -ex \
     && cd fs-uae \
     && bash ./bootstrap \
@@ -54,7 +57,22 @@ RUN set -ex \
 RUN set -ex \
     && cd install \
     && ls -al \
-    && zip -r /release/fs-uae.zip ./*
+    && zip -r /release/fs-uae-master.zip ./*
+RUN set -ex \
+    && rm -rf install \
+	&& rm -rf fs-uae \
+    && git clone https://github.com/FrodeSolheim/fs-uae.git -b fs-uae-3.1 \
+    && tar cvJf /release/fs-uae-3.1.tar.xz fs-uae
+RUN set -ex \
+    && cd fs-uae \
+    && bash ./bootstrap \
+    && bash ./configure --prefix=$(realpath ../install) 2>&1 | tee ../release/configure.txt \
+    && make -j $(nproc) \
+    && make install
+RUN set -ex \
+    && cd install \
+    && ls -al \
+    && zip -r /release/fs-uae-3.1.zip ./*
 EOF
 docker_build_image_and_create_volume
 docker run -d --name "$IMAGE_NAME" "$IMAGE_NAME" sleep 43200
